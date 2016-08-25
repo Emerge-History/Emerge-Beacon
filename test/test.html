@@ -4,13 +4,72 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> 
 	<title>test</title>
+	<style>
+		*{
+			margin: 0;padding: 0;
+			font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+		}
+		ul{
+			list-style: none;
+			white-space:nowrap;
+			overflow: hidden;
+			font-size: 13px;
+		}
+		.fuxk span.uuid {
+			margin-top: 20px;
+			display: inline-block;
+		}
+	</style>
 </head>
 <body>
-	<p id="a" style="background: red;"></p>
-	<ul id="table"></ul>
+
+	<div id="content"></div>
+	<script id="test" type="text/html">
+		<ul class="fuxk">
+			{{each beacons as value i}}
+				<span class="uuid">设备:{{value.uuid}}</span>
+				<li>信号:{{value.rssi}} 距离:{{value.proximity}} 精度:{{value.accuracy}}</li>
+			{{/each}}
+		</lu>
+	</script>
+
+
 	<script type="text/javascript" src="./jquery.min.js"></script>
-	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+	<!-- <script type="text/javascript" src="./jweixin-1.1.0.js"></script> -->
+	<script type="text/javascript" src="./template.js"></script>
+
 	<script type="text/javascript">
+		var data = {
+   "beacons":[
+           	{
+           	"major":10008,
+           	"minor":57686,
+           	"uuid":"FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+           	"accuracy":"0.235344",
+           	"rssi":"-66",
+           	"proximity":"1",
+           	"heading":"288.1355"
+           	},
+           	{
+           	"major":10008,
+           	"minor":57687,
+           	"uuid":"FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+           	"accuracy":"0.349124",
+           	"rssi":"-49",
+           	"proximity":"2",
+           	"heading":"288.1355"
+           	}
+           	]
+}
+		var html = template('test', data);
+		document.getElementById('content').innerHTML = html;
+	</script>
+
+
+	<script type="text/javascript">
+
+		var catchData = {};
+
 		$.get('/api', function(data){
 			var config = {
 		    debug: true, 
@@ -25,18 +84,13 @@
 			wx.ready(function(){
 
 				wx.startSearchBeacons({
-					complete:function(argv){
-						$('#a').html(JSON.stringify(argv));
-
+					complete:function(){
+						alert('completed!');
 						wx.onSearchBeacons({
-							complete:function(argv){
-								var b = argv['beacons'];
-								for(var i=0; i<b.length; i++){
-									$('#table').append('<li id="d'+ i +'"></li>')
-									var str = 'accuracy:' + b[i].accuracy + ' rssi:' + b[i].rssi + ' proximity:' + b[i].proximity;
-									$('#d'+i).html(str);
-								}
-								JSON.stringify(argv)
+							complete:function(dt){
+								// var b = argv['beacons'];
+								catchData = dt;
+								
 
 							}
 						});
