@@ -7,8 +7,7 @@
 </head>
 <body>
 	<p id="a" style="background: red;"></p>
-	<p id="b" style="background: green;"></p>
-	<p id="c" style="background: blue;"></p>
+	<ul id="table"></ul>
 	<script type="text/javascript" src="./jquery.min.js"></script>
 	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
 	<script type="text/javascript">
@@ -24,23 +23,26 @@
 
 			wx.config(config);
 			wx.ready(function(){
+
 				wx.startSearchBeacons({
 					complete:function(argv){
 						$('#a').html(JSON.stringify(argv));
+
 						wx.onSearchBeacons({
 							complete:function(argv){
-								$('#b').html(JSON.stringify(argv));
+								var b = argv['beacons'];
+								for(var i=0; i<b.length; i++){
+									$('#table').append('<li id="d'+ i +'"></li>')
+									var str = 'accuracy:' + b[i].accuracy + ' rssi:' + b[i].rssi + ' proximity:' + b[i].proximity;
+									$('#d'+i).html(str);
+								}
+								JSON.stringify(argv)
+
 							}
 						});
+
 					}
 				});
-
-				wx.onSearchBeacons({
-					complete:function(argv){
-						$('#c').html(JSON.stringify(argv));
-					}
-				});
-
 			});
 		});
 

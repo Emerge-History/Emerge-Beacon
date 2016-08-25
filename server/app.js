@@ -16,6 +16,64 @@ app.get('/', function (req, res) {
 
 
 
+// groudp 1847115
+
+// var request = require('request');
+// var fs = require('fs');
+// var file = JSON.parse(fs.readFileSync('./file.json').toString());
+// var token = file.accessToken;
+// var url = 'https://api.weixin.qq.com/shakearound/device/group/add?access_token=' + token;
+// var url2= 'https://api.weixin.qq.com/shakearound/device/group/adddevice?access_token=' + token;
+// request.post({
+//   url: url2, 
+//   body: JSON.stringify({
+//    "group_id": 1847115,
+//    "device_identifiers":[
+//             {
+//             "device_id":7487858
+//             }
+//    ]
+// })
+// }, function (e, r, body) {
+//   var info = JSON.parse(body);
+//   console.log(info);
+// })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 var http = require('http');
 
 var port = normalizePort(process.env.PORT || '80');
