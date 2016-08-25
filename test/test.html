@@ -6,7 +6,9 @@
 	<title>test</title>
 </head>
 <body>
-	test页面
+	<p id="a" style="background: red;"></p>
+	<p id="b" style="background: green;"></p>
+	<p id="c" style="background: blue;"></p>
 	<script type="text/javascript" src="./jquery.min.js"></script>
 	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
 	<script type="text/javascript">
@@ -24,13 +26,18 @@
 			wx.ready(function(){
 				wx.startSearchBeacons({
 					complete:function(argv){
-						console.log('argv1', argv);
+						$('#a').html(JSON.stringify(argv));
+						wx.onSearchBeacons({
+							complete:function(argv){
+								$('#b').html(JSON.stringify(argv));
+							}
+						});
 					}
 				});
+
 				wx.onSearchBeacons({
 					complete:function(argv){
-					//回调函数
-						document.write(JSON.stringify(argv));
+						$('#c').html(JSON.stringify(argv));
 					}
 				});
 
