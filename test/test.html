@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> 
 	<title>test</title>
 </head>
 <body>
-	是不
+	test页面
 	<script type="text/javascript" src="./jquery.min.js"></script>
 	<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
 	<script type="text/javascript">
-	alert(location.href.split('#')[0])
 		$.get('/api', function(data){
 			var config = {
 		    debug: true, 
@@ -17,26 +17,16 @@
 		    timestamp: Number(data.timestamp), 
 		    nonceStr: data.noncestr, 
 		    signature: data.signature,
-		    jsApiList: ['startSearchBeacons', 'stopSearchBeacons', 'stopSearchBeacons'] 
+		    jsApiList: ['startSearchBeacons', 'stopSearchBeacons', 'onSearchBeacons'] 
 			}
 
 			wx.config(config);
 			wx.ready(function(){
 				wx.startSearchBeacons({
-					ticket:"testtest",  //摇周边的业务ticket, 系统自动添加在摇出来的页面链接后面
 					complete:function(argv){
-						//开启查找完成后的回调函数
 						console.log('argv1', argv);
 					}
 				});
-
-				wx.onSearchBeacons({
-					complete:function(argv){
-						//回调函数，可以数组形式取得该商家注册的在周边的相关设备列表
-						console.log('argv2', argv);
-					}
-				});
-
 			});
 		});
 
