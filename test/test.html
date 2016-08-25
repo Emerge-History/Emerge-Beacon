@@ -27,6 +27,13 @@
 						console.log('argv1', argv);
 					}
 				});
+				wx.onSearchBeacons({
+					complete:function(argv){
+					//回调函数
+						document.write(JSON.stringify(argv));
+					}
+				});
+
 			});
 		});
 
