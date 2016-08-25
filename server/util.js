@@ -74,12 +74,10 @@ util.getSign = function(jsApiTicket) {
     'jsapi_ticket': jsApiTicket,
     'noncestr': Math.random().toString(36).substr(2, 15),
     'timestamp': parseInt(new Date().getTime() / 1000) + '',
-    'url': 'http://circuitpot.com'
+    'url': config.url
   };
   let sortData = "jsapi_ticket=" + data.jsapi_ticket + "&noncestr=" + data.noncestr + "&timestamp=" + data.timestamp + "&url=" + data.url;
   data.signature = sha1(sortData);
-  console.log(sortData);
-  console.log(jsApiTicket, data.noncestr, data.timestamp, data.url, data.signature);
   return data;
 }
 
