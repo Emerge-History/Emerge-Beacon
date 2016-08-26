@@ -59,6 +59,8 @@
 
 				wx.startSearchBeacons({
 					complete:function(dt){
+						console.log(dt);
+						alert(dt);
 						$('#tit').html(JSON.stringfy(dt));
 					}
 				});
