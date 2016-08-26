@@ -59,18 +59,17 @@
 
 				wx.startSearchBeacons({
 					complete:function(dt){
-						console.log(dt);
-						alert(dt);
-						$('#tit').html(JSON.stringfy(dt));
+						$('#tit').html(JSON.stringify(dt));
+						wx.onSearchBeacons({
+							complete:function(dt){
+								var html = template('test', dt);
+								document.getElementById('content').innerHTML = html;
+							}
+						});
 					}
 				});
 
-				wx.onSearchBeacons({
-					complete:function(dt){
-						var html = template('test', dt);
-						document.getElementById('content').innerHTML = html;
-					}
-				});
+
 
 			});
 		});
