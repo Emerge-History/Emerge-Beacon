@@ -1,90 +1,66 @@
 'use strict';
-let qs = require('qs');
-let config = require('./config');
-let request = require('request');
-let fs = require('fs');
+
+const qs = require('querystring');
+const request = require('request');
+
 let util = {};
-let sha1 = require('sha1');
 
-util.getAccessToken = function () {
-    let queryParams = {
-        'grant_type': 'client_credential',
-        'appid': config.appId,
-        'secret': config.appSecret
+Function.prototype.promise = function () {
+  //shift one out
+  var args = Array.prototype.slice.call(arguments);
+  var func = this;
+  return new Promise(function (res, rej) {
+    var cb = function () {
+      var cb_args = Array.prototype.slice.call(arguments);
+      var err = cb_args.shift();
+      if (err) {
+        return rej(err);
+      } else {
+        if (cb_args.length == 1) {
+        	return res(cb_args[0]);
+        } else {
+        	return res(cb_args);
+        }
+      }
     };
-
-    let wxGetAccessTokenUrl = 'https://api.weixin.qq.com/cgi-bin/token?' + qs.stringify(queryParams);
-    let options = {
-        method: 'GET',
-        url: wxGetAccessTokenUrl
-    };
-    return new Promise((resolve, reject) => {
-        request(options, function (err, res, body) {
-            if (res) {
-                resolve(JSON.parse(body));
-            } else {
-                reject(err);
-            }
-        });
-    })
-};
-
-util.saveTokenAndTicket = function () {
-    this.getAccessToken().then(res => {
-        let token = res['access_token'];
-        let queryParams = {
-            'access_token': token,
-            'type': 'jsapi'
-        };
-
-        let wxGetTicketUrl = 'https://api.weixin.qq.com/cgi-bin/ticket/getticket?' + qs.stringify(queryParams);
-        let options = {
-            method: 'GET',
-            url: wxGetTicketUrl
-        };
-
-        request(options, function (err, res, body) {
-            if (res) {
-                let ticket = JSON.parse(body).ticket;
-                let file = JSON.stringify({
-                    accessToken: token,
-                    ticket: ticket
-                });
-                fs.writeFile('./file.json', file, function (err) {
-                    // TODO 打印日志
-                    // console.log(err);
-                });
-            } else {
-                console.log(err);
-            }
-        });
-    })
-};
-
-util.refreshTokenAndTicket = function () {
-    this.saveTokenAndTicket();
-    setInterval(function () {
-        util.saveTokenAndTicket();
-    }, 7000*1000);
-};
-
-
-util.getSign = function(jsApiTicket) {
-  let data = {
-    'jsapi_ticket': jsApiTicket,
-    'noncestr': Math.random().toString(36).substr(2, 15),
-    'timestamp': parseInt(new Date().getTime() / 1000) + '',
-    'url': config.url
-  };
-  let sortData = "jsapi_ticket=" + data.jsapi_ticket + "&noncestr=" + data.noncestr + "&timestamp=" + data.timestamp + "&url=" + data.url;
-  data.signature = sha1(sortData);
-  return data;
+    args.push(cb);
+    func.apply(null, args);
+  });
 }
 
-util.getJsApiData = function () {
-    let file = JSON.parse(fs.readFileSync('./file.json').toString());
-    return this.getSign(file.ticket);
+/**
+ * GET请求
+ * @param  {[type]}   url         [有参数时后缀必须以?结尾]
+ * @param  {[type]}   queryParams [拼接在url后面的参数对]
+ * @return {[type]}               [description]
+ */
+util.get = function (url, queryParams) {
+	let _url = url + qs.stringify(queryParams);
+	let options = {
+	  method: 'GET',
+	  url: _url
+	};
+
+  return request.promise(options)
 }
 
+/**
+ * POST请求
+ * @param  {[type]}   url         [有参数时后缀必须以?结尾]
+ * @param  {[type]}   queryParams [拼接在url后面的参数对]
+ * @param  {[type]}   data        [需要post的对象]
+ * @return {[type]}               [description]
+ */
+util.post = function (url, queryParams, data) {
+	let _url = url + qs.stringify(queryParams);
+	let options = {
+	  url: _url,
+	  body: JSON.stringify(data)
+	};
+
+	request.post.promise(options);
+}
 
 module.exports = util;
+
+
