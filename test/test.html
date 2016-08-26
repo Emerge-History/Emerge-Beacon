@@ -22,7 +22,7 @@
 	</style>
 </head>
 <body>
-
+	<p id="tit" style="background:red;"></p>
 	<div id="content"></div>
 	<script id="test" type="text/html">
 		<ul class="fuxk">
@@ -46,7 +46,7 @@
 
 		$.get('/api', function(data){
 			var config = {
-		    debug: true, 
+		    debug: false, 
 		    appId: 'wxd3248bc1a7edaab3', 
 		    timestamp: Number(data.timestamp), 
 		    nonceStr: data.noncestr, 
@@ -58,18 +58,18 @@
 			wx.ready(function(){
 
 				wx.startSearchBeacons({
-					complete:function(){
-						alert('completed!');
+					complete:function(dt){
+						$('#tit').html(JSON.stringfy(dt));
 					}
 				});
 
 				wx.onSearchBeacons({
 					complete:function(dt){
-						var html = template('test', data);
+						var html = template('test', dt);
 						document.getElementById('content').innerHTML = html;
 					}
 				});
-				
+
 			});
 		});
 
