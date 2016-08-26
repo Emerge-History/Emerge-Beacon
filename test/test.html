@@ -35,35 +35,9 @@
 
 
 	<script type="text/javascript" src="./jquery.min.js"></script>
-	<!-- <script type="text/javascript" src="./jweixin-1.1.0.js"></script> -->
+	<script type="text/javascript" src="./jweixin-1.1.0.js"></script>
 	<script type="text/javascript" src="./template.js"></script>
 
-	<script type="text/javascript">
-		var data = {
-   "beacons":[
-           	{
-           	"major":10008,
-           	"minor":57686,
-           	"uuid":"FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
-           	"accuracy":"0.235344",
-           	"rssi":"-66",
-           	"proximity":"1",
-           	"heading":"288.1355"
-           	},
-           	{
-           	"major":10008,
-           	"minor":57687,
-           	"uuid":"FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
-           	"accuracy":"0.349124",
-           	"rssi":"-49",
-           	"proximity":"2",
-           	"heading":"288.1355"
-           	}
-           	]
-}
-		var html = template('test', data);
-		document.getElementById('content').innerHTML = html;
-	</script>
 
 
 	<script type="text/javascript">
@@ -86,17 +60,16 @@
 				wx.startSearchBeacons({
 					complete:function(){
 						alert('completed!');
-						wx.onSearchBeacons({
-							complete:function(dt){
-								// var b = argv['beacons'];
-								catchData = dt;
-								
-
-							}
-						});
-
 					}
 				});
+
+				wx.onSearchBeacons({
+					complete:function(dt){
+						var html = template('test', data);
+						document.getElementById('content').innerHTML = html;
+					}
+				});
+				
 			});
 		});
 
