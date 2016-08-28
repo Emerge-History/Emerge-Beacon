@@ -4,8 +4,8 @@
  * Module dependencies.
  */
 
-var app = require('./server/app');
-var debug = require('debug')('tetettetet:server');
+var app = require('../server/app');
+var debug = require('debug')('wechat-ibeacon:server');
 var http = require('http');
 
 /**
