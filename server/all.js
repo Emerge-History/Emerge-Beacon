@@ -113,9 +113,7 @@ all.groupList = (begin, count) => {
         begin: begin,
         count: count
     }
-    util.groupPost(url, data, ACCESSTOKEN).then(result => {
-        console.log(result);
-    });
+    return util.groupPost(url, data, ACCESSTOKEN);
 }
 
 // 查询分组详情

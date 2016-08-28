@@ -55,44 +55,50 @@
     </style>
 </head>
 <body>
-
-
+    <div id="con"></div>
+    <div id="page1"></div>
 
 
     <div class="login">
-        <div class="left">
-            <div class="login__input">
-                <input id="username" type="text" placeholder="用户名">
+        <div class="login__content" data-login={{isLogin}}>
+            <div class="left">
+                <div class="login__input">
+                    <input id="username" type="text" placeholder="用户名">
+                </div>
+                <div class="login__input">
+                    <input id="password" type="password" placeholder="密码">
+                </div>
+                <a href="javascript:;" class="login__btn">登录</a>   
             </div>
-            <div class="login__input">
-                <input id="password" type="password" placeholder="密码">
+            <div class="right">
+                <div class="login__qcode"></div>
             </div>
-            <a href="javascript:;" class="login__btn">登录</a>   
-        </div>
-        <div class="right">
-            <div class="login__qcode"></div>
         </div>
     </div>
+
     <script src="/vendor/jquery.min.js"></script>
     <script src="/vendor/layer/layer.js"></script>
+    <script src="/vendor/laypage/laypage.js"></script>
     <script>
         var index;
         setTimeout(function(){
-            layer.open({
-                title: '请登录',
-                type: 1,
-                skin: 'layui-layer-demo', //样式类名
-                closeBtn: 0, //不显示关闭按钮
-                shift: 2,
-                move: false,
-                content: $('.login'),
-                skin: 'layui-layer-lan',
-                area: '360px',
-                success: function(dom, layer){
-                    $('#username').focus();
-                    index = layer;
-                }
-            });
+            if(!$('.login__content').data('login')) {
+                layer.open({
+                    title: '请登录',
+                    type: 1,
+                    skin: 'layui-layer-demo', //样式类名
+                    closeBtn: 0, //不显示关闭按钮
+                    shift: 2,
+                    move: false,
+                    content: $('.login'),
+                    skin: 'layui-layer-lan',
+                    area: '360px',
+                    success: function(dom, layer){
+                        $('#username').focus();
+                        index = layer;
+                    }
+                });
+            }
         }, 1000);
         var login = function(){
             var username = $('#username').val();
@@ -117,6 +123,32 @@
         $('.login__btn').click(function(){
             login();
         });
+    </script>
+
+    <script>
+    function demo(curr){
+        $.getJSON('/admin/group/list', {
+            page: curr || 1 
+        }, function(res){
+            console.log(res)
+            //此处仅仅是为了演示变化的内容
+            var demoContent = (new Date().getTime()/Math.random()/1000)|0;
+            $('#con').html(res.content + demoContent);
+            //显示分页
+            laypage({
+                cont: 'page1', //容器。值支持id名、原生dom对象，jquery对象。【如该容器为】：<div id="page1"></div>
+                pages: res.pages, //通过后台拿到的总页数
+                curr: curr || 1, //当前页
+                jump: function(obj, first){ //触发分页后的回调
+                    if(!first){ //点击跳页触发函数自身，并传递当前页：obj.curr
+                        demo(obj.curr);
+                    }
+                }
+            });
+        });
+    };
+    //运行
+    demo();
     </script>
 </body>
 </html>
