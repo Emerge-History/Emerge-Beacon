@@ -78,9 +78,16 @@ all.groupAdd = (groupName) => {
     let data = {
         group_name: groupName
     }
-    util.groupPost(url, data, ACCESSTOKEN).then(result => {
-        console.log(result);
-    });
+    return util.groupPost(url, data, ACCESSTOKEN);
+}
+
+// 根据分组id 删除分组
+all.groupDelete = (groupId) => {
+    let url = 'https://api.weixin.qq.com/shakearound/device/group/delete';
+    let data = {
+        group_id: groupId
+    }
+    return util.groupPost(url, data, ACCESSTOKEN);
 }
 
 // 根据分组id 编辑分组名
@@ -90,20 +97,7 @@ all.groupUpdate = (groupId, groupNewName) => {
         group_id: groupId,
         group_name: groupNewName
     }
-    util.groupPost(url, data, ACCESSTOKEN).then(result => {
-        console.log(result);
-    });
-}
-
-// 根据分组id 删除分组
-all.groupDelete = (groupId) => {
-    let url = 'https://api.weixin.qq.com/shakearound/device/group/delete';
-    let data = {
-        group_id: groupId
-    }
-    util.groupPost(url, data, ACCESSTOKEN).then(result => {
-        console.log(result);
-    });
+    return util.groupPost(url, data, ACCESSTOKEN);
 }
 
 // 查询分组列表 可以分页
@@ -116,7 +110,7 @@ all.groupList = (begin, count) => {
     return util.groupPost(url, data, ACCESSTOKEN);
 }
 
-// 查询分组详情
+// 查询分组详情 可以分页
 all.groupDetail = (groupId, begin, count) => {
     let url = 'https://api.weixin.qq.com/shakearound/device/group/getdetail';
     let data = {
@@ -124,9 +118,7 @@ all.groupDetail = (groupId, begin, count) => {
         begin: begin,
         count: count
     }
-    util.groupPost(url, data, ACCESSTOKEN).then(result => {
-        console.log(result);
-    });
+    return util.groupPost(url, data, ACCESSTOKEN);
 }
 
 // 添加设备到分组
@@ -136,9 +128,7 @@ all.groupAddDevice = (groupId, deviceIdentifiers) => {
         group_id: groupId,
         device_identifiers: deviceIdentifiers
     }
-    util.groupPost(url, data, ACCESSTOKEN).then(result => {
-        console.log(result);
-    });
+    return util.groupPost(url, data, ACCESSTOKEN);
 }
 
 // 从分组中移除设备
@@ -148,9 +138,7 @@ all.groupDeleteDevice = (groupId, deviceIdentifiers) => {
         group_id: groupId,
         device_identifiers: deviceIdentifiers
     }
-    util.groupPost(url, data, ACCESSTOKEN).then(result => {
-        console.log(result);
-    });
+    return util.groupPost(url, data, ACCESSTOKEN);
 }
 
 // 调用
