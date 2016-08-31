@@ -5,12 +5,22 @@ const all = require('./all');
 const router = express.Router();
 const auth = require('./middlewares');
 const config = require('./config');
+const socketIo = require('socket.io');
 
 // admin 页面
 router.get('/admin', (req, res, next) => {
 	res.render('admin/index', {
 		layout: false,
 		isLogin: !!req.session.admin + ''
+	});
+});
+
+// postion 页面
+router.get('/admin/position', (req, res, next) => {
+	res.render('admin/position', {
+		layout: false,
+		isLogin: !!req.session.admin + '',
+		url: req.headers.host
 	});
 });
 
@@ -44,7 +54,6 @@ router.get('/admin/group/add', (req, res, next) => {
 				msg: '添加失败，请稍后再试'
 			});
 		}
-		
     });
 });
 
@@ -173,5 +182,44 @@ router.get('/admin/group/deletedevice', (req, res, next) => {
 router.get('/test', auth.adminRequired, (req, res, next) => {
 	res.render('admin/index');
 });
+
+// ************************************************************************************
+
+router.get('/h5/demo1', (req, res, next) => {
+	// console.log(req.headers.host);
+	let data = all.getWeixinConfig('http://kjdkanekv8.proxy.qqbrowser.cc/h5/demo1');
+	res.render('h5/demo1', {
+		layout: false,
+		config: data
+	});
+});
+
+router.get('/map/index', (req, res, next) => {
+	let data = all.getWeixinConfig('http://kjdkanekv8.proxy.qqbrowser.cc/map/index');
+	res.render('map/index', {
+		layout: false,
+		config: data,
+		url: req.headers.host
+	});
+});
+
+
+// 添加 socketIo
+router.prepareSocketIO = function (server) {
+    var io = socketIo.listen(server);
+    io.sockets.on('connection', function (socket) {
+		console.log('in')
+		socket.on('beacons', function (data) {
+			console.log('beacons', data)
+			io.emit('news', data);
+		});
+    });
+
+};
+
+
+
+
+
 
 module.exports = router;

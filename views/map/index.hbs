@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>map</title>
+</head>
+<body>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+    <script>
+		var config = {
+		    debug: false, 
+		    appId: 'wxd3248bc1a7edaab3', 
+		    timestamp: {{ config.timestamp }}, 
+		    nonceStr: '{{ config.noncestr }}', 
+		    signature: '{{ config.signature }}', 
+		    jsApiList: ['startSearchBeacons', 'stopSearchBeacons'] 
+		}
+        var socket = io.connect('{{url}}');
+    </script>
+    <script src="/map/js/index.js"></script>
+
+</body>
+</html>

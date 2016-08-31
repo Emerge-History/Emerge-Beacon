@@ -1,5 +1,4 @@
 exports.adminRequired = function (req, res, next) {
-    console.log(req.session.admin)
     if(!req.session.admin){
         return res.json({
             status: 0,

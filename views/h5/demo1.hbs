@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/> 
+    <title>demo1</title>
+	<style>
+		*{margin: 0;padding: 0;}
+		html, body {
+			width: 100%;
+			height: 100%;
+		}
+		.center {
+			width: 100%;
+			height: 10px;
+			background: red;
+			position: absolute;
+			bottom: 50%;
+			left: 50%;
+			transform: translateX(-50%);
+		}
+		.p{
+			width: 30px;
+			height: 30px;
+			background: #000;
+			border-radius: 50%;
+			position: absolute;
+			left: 50%;
+			transform: translateX(-50%);
+			top: 0;
+		}
+	</style>
+</head>
+<body>
+	<p>信号: <span id="rssi"></span> 
+	<p id="origin"></p>
+	↓是处理后的距离
+	<p id="handled"></p>
+	<p class="v"></p>
+
+<div class="p"></div>
+<div class="center"></div>
+
+
+
+
+	<script src="/vendor/jquery.min.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.1.0.js"></script>
+    <script>
+		var config = {
+		    debug: false, 
+		    appId: 'wxd3248bc1a7edaab3', 
+		    timestamp: {{ config.timestamp }}, 
+		    nonceStr: '{{ config.noncestr }}', 
+		    signature: '{{ config.signature }}', 
+		    jsApiList: ['startSearchBeacons', 'stopSearchBeacons'] 
+		}
+    </script>
+    <script src="/h5/js/demo1.js"></script>
+    
+</body>
+</html>

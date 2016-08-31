@@ -141,7 +141,7 @@ all.groupDeleteDevice = (groupId, deviceIdentifiers) => {
     return util.groupPost(url, data, ACCESSTOKEN);
 }
 
-// 调用
+// 定时刷新
 all.refreshSecret();
 
 module.exports = all;
