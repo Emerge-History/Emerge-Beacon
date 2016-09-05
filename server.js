@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../server/app');
+var app = require('./server/app');
 var debug = require('debug')('wechat-ibeacon:server');
 var http = require('http');
 
@@ -20,7 +20,6 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-app.ready(server);
 
 /**
  * Listen on provided port, on all network interfaces.
