@@ -54,7 +54,7 @@ wechat.getTicket = () => new Promise((resolve) => {
 });
 
 // 接收一个 url 并返回 wechat config
-wechat.getConfig = async (url) => {
+wechat.getConfig = async (url, cb) => {
     await wechat.getAccessToken();
     const jsapiTicket = await wechat.getTicket();
     const noncestr = Math.random().toString(36).substr(2, 15);
@@ -63,11 +63,13 @@ wechat.getConfig = async (url) => {
         jsapi_ticket: jsapiTicket,
         noncestr: noncestr,
         timestamp: timestamp,
-        url: url
+        url: url,
+        appId: config.appId
     };
     const sortData = "jsapi_ticket=" + jsapiTicket + "&noncestr=" + noncestr + "&timestamp=" + timestamp + "&url=" + url;
     data.signature = sha1(sortData);
-    return data;
+    cb(data);
 }
+
 
 module.exports = wechat;

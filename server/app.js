@@ -14,10 +14,17 @@ const config = require('./config');
 
 let app = express();
 
-app.set('views', path.join(__dirname, '../web/views'));
-app.set('view engine', 'hbs');
 
-app.use(favicon(path.join(__dirname, '../web/public', 'favicon.ico')));
+
+
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'html');
+app.engine('html', require('hbs').__express);
+app.use(express.static(path.join(__dirname, 'public')));
+
+
+
+// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 // app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -28,7 +35,6 @@ app.use(session({
   saveUninitialized: true,
   cookie: { secure: true }
 }));
-app.use(express.static(path.join(__dirname, '../web/public')));
 
 app.use('/', routes);
 

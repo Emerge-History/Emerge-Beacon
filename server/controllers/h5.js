@@ -1,10 +1,13 @@
+'use strict';
+
 const wechat = require('../proxy/wechat');
 
-exports.demo1 = async (req, res) => {
+exports.demo1 = (req, res) => {
 	// console.log(req.headers.host + req.url);
-	const data = await wechat.getConfig('http://kjdkanekv8.proxy.qqbrowser.cc/h5/demo1');
-	res.render('h5/demo1', {
-		layout: false,
-		config: data
+	wechat.getConfig('http://kjdkanekv8.proxy.qqbrowser.cc/h5/demo1', (data) => {
+		res.render('h5/demo1', {
+			layout: false,
+			config: data
+		});
 	});
 }
