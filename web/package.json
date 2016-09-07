@@ -25,6 +25,9 @@
     "gulp-notify": "^2.2.0",
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
+    "gulp-rev": "^7.1.2",
+    "gulp-rev-collector": "^1.0.5",
+    "gulp-run-sequence": "^0.3.2",
     "gulp-sprite2": "^0.3.6",
     "gulp-uglify": "^2.0.0"
   }

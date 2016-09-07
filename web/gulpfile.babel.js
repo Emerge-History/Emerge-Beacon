@@ -15,30 +15,48 @@ import htmlmin from 'gulp-htmlmin';
 import plumber from 'gulp-plumber';
 import spriter from 'gulp-sprite2';
 import imagemin from 'gulp-imagemin';
+import rev from 'gulp-rev';
+import revCollector from 'gulp-rev-collector';
+import runSequence from 'gulp-run-sequence';
+
 import {paths} from './gulpfile.paths';
+import {_task} from './gulpfile.task';
+
+const reload = browserSync.reload;
+
+
+
+
 
 // css
 gulp.task('css', () => {
   return gulp.src(paths.src.css)
-    // .pipe(plumber())
+    .pipe(plumber())
     .pipe(less())
     .pipe(autoprefixer())
     .pipe(gulp.dest(paths.dev._css))
+    .pipe(reload({ stream: true }));
 });
 gulp.task('css-min', ['css'], () => {
   return gulp.src(paths.dev.css)
+    //.pipe(concat('wap.min.css'))
     .pipe(minifycss())
+    .pipe(rev())
     .pipe(gulp.dest(paths.dist._css))
+    .pipe(rev.manifest())
+    .pipe(gulp.dest('./dev/rev/css'));
 });
 
 // html
 gulp.task('html', function () {
   return gulp.src(paths.src.html)
-    .pipe(gulp.dest(paths.dev._html));
+    .pipe(gulp.dest(paths.dev._html))
+    .pipe(reload({ stream: true }));
 });
-gulp.task('html-min', ['html'], function () {
-  return gulp.src(paths.dev.html)
+gulp.task('html-rev', ['html'], function () {
+  gulp.src(['./dev/rev/**/*.json', paths.dev.html])
     .pipe(htmlmin({ collapseWhitespace: true }))
+    .pipe(revCollector({replaceReved: true}))
     .pipe(gulp.dest(paths.dist._html));
 });
 
@@ -46,6 +64,7 @@ gulp.task('html-min', ['html'], function () {
 gulp.task('img', function () {
   return gulp.src(paths.src.img)
     .pipe(gulp.dest(paths.dev._img))
+    .pipe(reload({ stream: true }));
 });
 gulp.task('img-min', ['img'], function () {
   return gulp.src(paths.dev.img)
@@ -57,6 +76,7 @@ gulp.task('img-min', ['img'], function () {
 gulp.task('js', function () {
   return gulp.src(paths.src.js)
     .pipe(gulp.dest(paths.dev._js))
+    .pipe(reload({ stream: true }));
 });
 gulp.task('js-min', ['js'], function () {
   return gulp.src(paths.dev.js)
@@ -74,8 +94,22 @@ gulp.task('favicon-min', ['favicon'], function () {
     .pipe(gulp.dest(paths.dist._path))
 });
 
-// watch
-gulp.task('browserSync', function () {
+// clean
+gulp.task('clean', function () {
+  return gulp.src(paths.dev._path, {
+    read: false
+  })
+    .pipe(clean());
+});
+
+
+gulp.task('default', ['dev'], function () {
+  _task({
+    projectName: 'Example'
+  })
+});
+
+gulp.task('dev', ['css', 'html', 'img', 'js', 'favicon'], function () {
   browserSync({
     files: [
       paths.dev.css,
@@ -87,32 +121,12 @@ gulp.task('browserSync', function () {
       baseDir: paths.dev._path
     }
   });
-});
-
-// clean
-gulp.task('clean', function () {
-  return gulp.src(paths.dev._path, {
-    read: false
-  })
-    .pipe(clean());
-});
-
-
-gulp.task('default', function () {
-  gulp.start('dev');
-});
-
-// TODO 不要watcher
-gulp.task('dev', ['css', 'html', 'img', 'js', 'favicon', 'browserSync'], function () {
-  var watcher = gulp.watch(paths.src.css, ['css']);
+  gulp.watch(paths.src.css, ['css']);
   gulp.watch(paths.src.html, ['html']);
   gulp.watch(paths.src.img, ['img']);
   gulp.watch(paths.src.js, ['js']);
-  watcher.on('change', function (event) {
-    console.log('File ' + event.path + ' was ' + event.type + ', running tasks...');
-  });
 });
 
-gulp.task('dist', ['css-min', 'html-min', 'img-min', 'js-min', 'favicon-min'], function () {
-  gulp.start('clean');
+gulp.task('dist', function (cb) {
+  runSequence('css-min', 'img-min', 'js-min', 'favicon-min', 'html-rev', cb);
 });
