@@ -16,6 +16,7 @@
   "dependencies": {
     "browser-sync": "^2.15.0",
     "gulp-autoprefixer": "^3.1.1",
+    "gulp-babel": "^6.1.2",
     "gulp-clean": "^0.3.2",
     "gulp-clean-css": "^2.0.12",
     "gulp-concat": "^2.6.0",
@@ -27,9 +28,13 @@
     "gulp-plumber": "^1.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-rev": "^7.1.2",
+    "gulp-rev-append": "^0.1.6",
+    "gulp-rev-append-all": "^0.1.6",
     "gulp-rev-collector": "^1.0.5",
     "gulp-run-sequence": "^0.3.2",
     "gulp-sprite2": "^0.3.6",
-    "gulp-uglify": "^2.0.0"
+    "gulp-uglify": "^2.0.0",
+    "gulp-usemin": "^0.3.24",
+    "gulp-watch": "^4.3.9"
   }
 }

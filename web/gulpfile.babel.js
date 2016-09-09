@@ -2,7 +2,7 @@
 
 import gulp from 'gulp';
 import less from 'gulp-less';
-// import path from 'path';
+import path from 'path';
 import autoprefixer from 'gulp-autoprefixer';
 import cleanCSS from 'gulp-clean-css';
 import plumber from 'gulp-plumber';
@@ -14,8 +14,9 @@ import uglify from 'gulp-uglify';
 import rev from 'gulp-rev';
 import htmlmin from 'gulp-htmlmin';
 import revCollector from 'gulp-rev-collector';
-
-
+import babel from 'gulp-babel';
+import watch from 'gulp-watch';
+import usemin from'gulp-usemin';
 import {paths} from './gulpfile.paths';
 const reload = browserSync.reload;
 
@@ -32,26 +33,10 @@ gulp.task('css', () => {
         .pipe(reload({ stream: true }));
 });
 
-gulp.task('css-min', ['css'], () => {
-    return gulp.src(paths.dev.css)
-        //.pipe(concat('all.min.css'))
-        .pipe(cleanCSS({ compatibility: 'ie8' }))
-        .pipe(rev())
-        .pipe(gulp.dest(paths.dist._css))
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(paths.dev._rev + '/css'));
-});
-
-
 // fonts
 gulp.task('fonts', () => {
     return gulp.src(paths.src.fonts)
         .pipe(gulp.dest(paths.dev._fonts))
-});
-
-gulp.task('fonts-min', ['fonts'], () => {
-    return gulp.src(paths.dev.fonts)
-        .pipe(gulp.dest(paths.dist._fonts))
 });
 
 // html
@@ -61,13 +46,6 @@ gulp.task('html', () => {
         .pipe(reload({ stream: true }));
 });
 
-gulp.task('html-min', ['html'], () => {
-    gulp.src([paths.dev.rev, paths.dev.html])
-        .pipe(revCollector({ replaceReved: true }))
-        // .pipe(htmlmin({ collapseWhitespace: true }))
-        .pipe(gulp.dest(paths.dist._html));
-});
-
 // img
 gulp.task('img', () => {
     return gulp.src(paths.src.img)
@@ -75,30 +53,16 @@ gulp.task('img', () => {
         .pipe(reload({ stream: true }));
 });
 
-gulp.task('img-min', ['img'], () => {
-    return gulp.src(paths.dev.img)
-        .pipe(imagemin())
-        .pipe(gulp.dest(paths.dist._img))
-});
-
 // js
 gulp.task('js', () => {
     return gulp.src(paths.src.js)
+        .pipe(plumber())
+        .pipe(babel({
+            presets: ['es2015']
+        }))
         .pipe(gulp.dest(paths.dev._js))
         .pipe(reload({ stream: true }));
 });
-
-gulp.task('js-min', ['js'], () => {
-    return gulp.src(paths.dev.js)
-        .pipe(uglify())
-        .pipe(rev())
-        .pipe(gulp.dest(paths.dist._js))
-        .pipe(rev.manifest())
-        .pipe(gulp.dest(paths.dev._rev + '/js'));
-});
-
-
-
 
 // favicon
 gulp.task('favicon', () => {
@@ -106,34 +70,32 @@ gulp.task('favicon', () => {
         .pipe(gulp.dest(paths.dev._path))
 });
 
-gulp.task('favicon-min', ['favicon'], () => {
-    return gulp.src(paths.src.favicon)
-        .pipe(gulp.dest(paths.dev._path))
+// watch
+gulp.task('watch-dev', () => {
+    gulp.watch(paths.src.html, ['html']);
+    gulp.watch(paths.src.img, ['img']);
+    gulp.watch(paths.src.js, ['js']);
+    gulp.watch(paths.src.css, ['css']);
 });
-
-
 
 // clean
-gulp.task('clean', () => {
-    return gulp.src(paths.dev._path, {
+gulp.task('clean-all', () => {
+    return gulp.src([paths.dev._path, paths.dist._path, paths.dist._html, paths.temp._path], {
         read: false
     })
-        .pipe(clean());
+        .pipe(clean({ force: true }));
 });
-gulp.task('clean-min', () => {
-    return gulp.src([paths.dist._path, paths.dist._html], {
+gulp.task('clean-dev-temp', () => {
+    return gulp.src([paths.dev._path, paths.temp._path], {
         read: false
     })
         .pipe(clean({ force: true }));
 });
 
+gulp.task('default', ['dev']);
 
-gulp.task('default', ['dev'], () => {
-
-});
-
-gulp.task('dev', (cb) => {
-    runSequence('clean', ['css', 'fonts', 'html', 'img', 'js', 'favicon'], cb);
+gulp.task('dev', ['watch-dev'], (cb) => {
+    runSequence('clean-all', ['css', 'fonts', 'html', 'img', 'js', 'favicon'], 'watch-dev', cb);
     browserSync({
         files: [
             paths.dev.css,
@@ -145,12 +107,76 @@ gulp.task('dev', (cb) => {
             baseDir: paths.dev._path
         }
     });
-    gulp.watch(paths.src.css, ['css']);
-    gulp.watch(paths.src.html, ['html']);
-    gulp.watch(paths.src.img, ['img']);
-    gulp.watch(paths.src.js, ['js']);
 });
 
+
+
+
+
+
+
+
+
+
 gulp.task('dist', (cb) => {
-    runSequence('clean', 'clean-min', 'css-min', 'js-min', ['fonts-min', 'html-min', 'img-min', 'favicon-min'], 'clean', cb);
+runSequence('clean-all', ['css', 'fonts', 'html', 'img', 'js', 'favicon'], 'usemin-temp','usemin','clean-dev-temp', cb);
 });
+
+
+
+gulp.task('usemin-temp', function () {
+    return gulp.src(paths.dev.html)
+        .pipe(usemin({
+            css: [rev, ()=>{return cleanCSS({ compatibility: 'ie8' })}],
+            js: [rev, uglify]
+        }))
+        .pipe(gulp.dest('temp/'));
+});
+
+gulp.task('usemin',function (cb) {
+    runSequence('assets-min', ['html-min', 'fonts-min', 'img-min', 'favicon-min'], cb);
+});
+
+gulp.task('assets-min', function () {
+    return gulp.src(paths.temp.assets)
+        .pipe(gulp.dest(paths.dist._path));
+});
+gulp.task('html-min', function () {
+    return gulp.src(paths.temp.html)
+        //.pipe(htmlmin({ collapseWhitespace: true }))
+        .pipe(gulp.dest(paths.dist._html));
+});
+gulp.task('fonts-min', ['fonts'], () => {
+    return gulp.src(paths.dev.fonts)
+        .pipe(gulp.dest(paths.dist._fonts))
+});
+gulp.task('img-min', ['img'], () => {
+    return gulp.src(paths.dev.img)
+        .pipe(imagemin())
+        .pipe(gulp.dest(paths.dist._img))
+});
+gulp.task('favicon-min', ['favicon'], () => {
+    return gulp.src(paths.src.favicon)
+        .pipe(gulp.dest(paths.dev._path))
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
