@@ -3,8 +3,7 @@
 const admin = require('../proxy/admin');
 
 exports.loginPage = (req, res) => {
-	res.render('admin/login', {
-		layout: false,
+	res.render('admin-login', {
 		title: 'dsffsd'
 	});
 }

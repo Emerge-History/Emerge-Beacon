@@ -13,9 +13,7 @@ import imagemin from 'gulp-imagemin';
 import uglify from 'gulp-uglify';
 import rev from 'gulp-rev';
 import htmlmin from 'gulp-htmlmin';
-import revCollector from 'gulp-rev-collector';
 import babel from 'gulp-babel';
-import watch from 'gulp-watch';
 import usemin from'gulp-usemin';
 import {paths} from './gulpfile.paths';
 const reload = browserSync.reload;
@@ -156,8 +154,8 @@ gulp.task('img-min', ['img'], () => {
         .pipe(gulp.dest(paths.dist._img))
 });
 gulp.task('favicon-min', ['favicon'], () => {
-    return gulp.src(paths.src.favicon)
-        .pipe(gulp.dest(paths.dev._path))
+    return gulp.src(paths.dev.favicon)
+        .pipe(gulp.dest(paths.dist._path))
 });
 
 
