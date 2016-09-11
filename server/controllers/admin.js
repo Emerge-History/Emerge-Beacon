@@ -1,16 +1,30 @@
 'use strict';
 
 const admin = require('../proxy/admin');
+const config = require('../config');
 
 exports.loginPage = (req, res) => {
-	res.render('admin-login', {
-		title: 'dsffsd'
-	});
+	res.render('admin-login');
 }
 
+exports.login = (req, res) => {
+	if (req.body.username === config.admin.username && req.body.password === config.admin.password) {
+		req.session.admin = 'true';
+		res.json({
+			status: 1,
+			msg: '登录成功'
+		});
+	} else {
+		res.json({
+			status: 0,
+			msg: '登录失败'
+		});
+	}
+}
 
-
-
+exports.indexPage = (req, res) => {
+	res.render('admin-index');
+}
 
 
 
@@ -40,7 +54,7 @@ exports.groupAdd = (req, res) => {
 exports.groupDelete = (req, res) => {
 	let groupId = parseInt(req.query.groupId);
 	admin.groupDelete(groupId).then(result => {
-		if(result.errcode === 0) {
+		if (result.errcode === 0) {
 			result.status = 1;
 			result.msg = '删除成功';
 			res.json(result);
@@ -58,7 +72,7 @@ exports.groupUpdate = (req, res) => {
 	let groupId = parseInt(req.query.groupId);
 	let groupNewName = req.query.groupNewName;
 	admin.groupUpdate(groupId, groupNewName).then(result => {
-		if(result.errcode === 0) {
+		if (result.errcode === 0) {
 			result.status = 1;
 			result.msg = '修改成功';
 			res.json(result);
@@ -86,10 +100,10 @@ exports.groupDetail = (req, res) => {
 	let groupId = parseInt(req.query.groupId);
 	let page = req.query.page || 1;
 	let count = page * config.pageSize;
-	admin.groupDetail(groupId, count-config.pageSize, count).then(result => {
-		let pages =  Math.ceil(result.data.total_count/10);
+	admin.groupDetail(groupId, count - config.pageSize, count).then(result => {
+		let pages = Math.ceil(result.data.total_count / 10);
 		let devices = result.data.devices;
-		if(result.errcode === 0) {
+		if (result.errcode === 0) {
 			result.status = 1;
 			result.msg = '查询成功';
 			result.pages = pages;
@@ -111,14 +125,14 @@ exports.groupAddDevice = (req, res) => {
 	let deviceStr = req.query.deviceStr;
 	let deviceArr = deviceStr.split(',');
 	let deviceIdentifiers = [];
-	for(let i=0; i<deviceArr.length; i++) {
+	for (let i = 0; i < deviceArr.length; i++) {
 		let temp = {
 			device_id: deviceArr[i]
 		}
 		deviceIdentifiers.push(temp);
 	}
 	admin.groupAddDevice(groupId, deviceIdentifiers).then(result => {
-		if(result.errcode === 0) {
+		if (result.errcode === 0) {
 			result.status = 1;
 			result.msg = '添加成功';
 			res.json(result);
@@ -137,14 +151,14 @@ exports.groupDeleteDevice = (req, res) => {
 	let deviceStr = req.query.deviceStr;
 	let deviceArr = deviceStr.split(',');
 	let deviceIdentifiers = [];
-	for(let i=0; i<deviceArr.length; i++) {
+	for (let i = 0; i < deviceArr.length; i++) {
 		let temp = {
 			device_id: deviceArr[i]
 		}
 		deviceIdentifiers.push(temp);
 	}
 	admin.groupDeleteDevice(groupId, deviceIdentifiers).then(result => {
-		if(result.errcode === 0) {
+		if (result.errcode === 0) {
 			result.status = 1;
 			result.msg = '添加成功';
 			res.json(result);

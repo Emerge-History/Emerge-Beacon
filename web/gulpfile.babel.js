@@ -117,29 +117,29 @@ gulp.task('dev', ['watch-dev'], (cb) => {
 
 
 gulp.task('dist', (cb) => {
-runSequence('clean-all', ['css', 'fonts', 'html', 'img', 'js', 'favicon'], 'usemin-temp','usemin','clean-dev-temp', cb);
+    runSequence('clean-all', ['css', 'fonts', 'html', 'img', 'js', 'favicon'], 'usemin-temp', 'usemin', 'clean-dev-temp', cb);
 });
 
 
 
-gulp.task('usemin-temp', function () {
+gulp.task('usemin-temp', () => {
     return gulp.src(paths.dev.html)
         .pipe(usemin({
-            css: [rev, ()=>{return cleanCSS({ compatibility: 'ie8' })}],
+            css: [rev, () => { return cleanCSS({ compatibility: 'ie8' }) }],
             js: [rev, uglify]
         }))
         .pipe(gulp.dest('temp/'));
 });
 
-gulp.task('usemin',function (cb) {
+gulp.task('usemin', (cb) => {
     runSequence('assets-min', ['html-min', 'fonts-min', 'img-min', 'favicon-min'], cb);
 });
 
-gulp.task('assets-min', function () {
+gulp.task('assets-min', () => {
     return gulp.src(paths.temp.assets)
         .pipe(gulp.dest(paths.dist._path));
 });
-gulp.task('html-min', function () {
+gulp.task('html-min', () => {
     return gulp.src(paths.temp.html)
         //.pipe(htmlmin({ collapseWhitespace: true }))
         .pipe(gulp.dest(paths.dist._html));

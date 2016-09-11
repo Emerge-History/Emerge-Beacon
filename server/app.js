@@ -30,10 +30,12 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(session({
   secret: config.sessionSecret,
+  name: 'test',
+  cookie: { maxAge: 80000 },
   resave: false,
-  saveUninitialized: true,
-  cookie: { secure: true }
+  saveUninitialized: true
 }));
+
 
 app.use('/', routes);
 

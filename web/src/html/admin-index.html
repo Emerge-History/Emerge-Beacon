@@ -4,10 +4,66 @@
 <head>
     <meta charset="UTF-8">
     <title>管理详情</title>
+
+<!-- build:css /assets/css/common.css -->
+<link rel="stylesheet" href="../css/style-common.css"/>
+<!-- endbuild -->
+
+<!-- build:css /assets/css/admin-index.css -->
+<link rel="stylesheet" href="../css/style-admin-index.css">
+<!-- endbuild -->
+
 </head>
 
 <body>
-sdfds
+
+    <header class="header">
+        <div class="w">
+            <h1>Emerge</h1>
+            <p>beacon管理系统</p>
+        </div>
+    </header>
+
+    <section class="container">
+        <div class="w">
+            <aside class="sider">
+                <ul class="sider__container">
+                    <span class="sider__add"><i style="margin-right:10px;" class="iconfont icon-xinjian"></i>新建分组</span>
+                </ul>
+            </aside>
+            <article class="content">
+                <table class="table table-border table-bordered">
+                    <thead>
+                        <tr>
+                            <th style="width:70px;text-align:center;"><label><input type="checkbox"><span>全选</span></label></th>
+                            <th>device_id</th>
+                            <th>comment</th>
+                            <th>操作<span class="table__handle"><a href="javascript:;" id="addDevice">新增设备</a><a href="javascript:;" id="removeDevice">批量移除</a></span></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody" data-groupId="">
+
+                    </tbody>
+                </table>
+                <div id="pageDiv" style="text-align: left;margin-top: 20px;"></div>
+            </article>
+        </div>
+    </section>
+
+
+<!-- build:js /assets/js/common.js -->
+<script src="../js/vendor/jquery.min.js"></script>
+<script src="../js/vendor/layer.js"></script>
+<script src="../js/vendor/laypage.js"></script>
+<!-- endbuild -->
+
+<!-- build:js /assets/js/admin-index.js -->
+<script src="../js/admin-index.js"></script>
+<!-- endbuild -->
+
+
+
+
 </body>
 
 </html>

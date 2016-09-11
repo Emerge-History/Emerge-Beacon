@@ -1,12 +1,22 @@
 $('#login').click(() => {
-    $.post('/admin', {
+    login();
+});
+
+const login = () => {
+    $.post('/admin/login', {
         username: $('#username').val(),
         password: $('#password').val()
-    }, function (data) {
+    }, (data) => {
         if (data.status === 0) {
-            alert(data.msg);
+            layer.msg(data.msg);
         } else {
             window.location.href = '/admin';
         }
     })
-});
+}
+
+$('#username, #password').keydown((e)=>{
+    if (e.keyCode == 13) {
+        login();
+    }
+})
