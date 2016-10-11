@@ -1,6 +1,1 @@
 node_modules
-npm-debug.log
-.DS_Store
-/server/public
-/server/views
-dev
