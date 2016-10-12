@@ -20,9 +20,20 @@ app.use(helmet())
 app.use(cors())
 app.use(logger('dev'))
 app.use(fileUpload())
-app.use('/upload', express.static(path.join(__dirname, 'public/upload')))
 
+// static
+app.use('/upload', express.static(path.join(__dirname, 'public/upload')))
 app.use('/admin', express.static(path.join(__dirname, 'public/admin')))
+
+
+// beacon page
+import wechat from './controllers/wechat'
+app.get('/h5', async(req, res) => {
+  const data = await wechat.getConfig('http://kjdkanekv8.proxy.qqbrowser.cc/h5/demo1')
+  res.json({
+    msg: data
+  })
+})
 
 // routes 
 app.use('/api', routes)

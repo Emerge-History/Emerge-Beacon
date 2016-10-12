@@ -3,6 +3,7 @@ import sign from './controllers/sign'
 import author from './controllers/author'
 import work from './controllers/work'
 import sort from './controllers/sort'
+import beacon from './controllers/beacon'
 import config from './config'
 import jwt from 'express-jwt'
 import fs from 'fs'
@@ -38,10 +39,13 @@ router.get('/color', sort.color)
 
 
 
-
-
-
-
+router.get('/groupAdd', beacon.groupAdd)
+router.get('/groupDelete', beacon.groupDelete)
+router.get('/groupUpdate', beacon.groupUpdate)
+router.get('/groupList', beacon.groupList)
+router.get('/groupDetail', beacon.groupDetail)
+router.get('/groupAddDevice', beacon.groupAddDevice)
+router.get('/groupDeleteDevice', beacon.groupDeleteDevice)
 
 
 
