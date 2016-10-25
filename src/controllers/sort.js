@@ -21,10 +21,7 @@ sort.search = (req, res) => {
   }
   Work.findAll({
       where: {
-          $or: [
-                {name: {$like: query[0]}},
-                {introduce: {$like:  query[0]}}
-              ]
+          name: {$like: query[0]}
       }
   }).then(works=>{
       res.json({
@@ -33,7 +30,5 @@ sort.search = (req, res) => {
   })
 }
 
-sort.color = (req, res) => {
-}
 
 export default sort

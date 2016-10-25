@@ -1,0 +1,113 @@
+html ,body, canvas {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    -webkit-tap-highlight-color:rgba(255,255,255,0)
+}
+
+#canvas {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    -webkit-transform3d: translate(0, 0, 0);
+    -moz-transform3d: translate(0, 0, 0);
+    transform3d: translate(0, 0, 0);
+}
+
+#fps {
+    position: fixed;
+    top: 5px;
+    right: 5px;
+    color: red;
+    text-align: right;
+    font-size: 1em;
+    display: inline-block;
+    pointer-events: none;
+    font-family: sans-serif;
+    display: none;
+}
+
+#fps.red {
+    background: red;
+    color: black;
+}
+
+.banner {
+    position: fixed;
+    bottom: 50px;
+    left: 0px;
+    right: 0px;
+    text-align: center;
+    font-family: Microsoft YaHei, lato, Helvetica Neue, Helvetica, PingFang SC, Hiragino Sans GB, Arial, sans-serif;
+    pointer-events: none;
+    filter: blur(10px);
+}
+
+.banner * {
+    margin: 0;
+    padding: 0;
+}
+
+.banner h1 {
+    color: #282828;
+    font-weight: 500;
+    font-size: 36px;
+    letter-spacing: 2px;
+}
+
+.banner h2 {
+    color: #282828;
+    font-size: 20px;
+    margin-bottom: 15px;
+    font-weight: 400;
+    letter-spacing: 2px;
+}
+
+.banner h3 {
+    color: #282828;
+    font-weight: 500;
+    font-size: 20px;
+    letter-spacing: 2px;
+}
+
+.content-zone {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: scroll;
+    height: 100%;
+    width: 100%;
+}
+
+#content {
+    height: 100%;
+}
+
+
+
+
+
+
+html{font-size:20px}@media only screen and (min-width:320px){html{font-size:17.3px!important}}@media only screen and (min-width:375px){html{font-size:20px!important}}@media only screen and (min-width:400px){html{font-size:21.33333333px!important}}@media only screen and (min-width:414px){html{font-size:22.08px!important}}@media only screen and (min-width:480px){html{font-size:25.6px!important}}html[data-rem="320"]{font-size:20px}@media only screen and (min-width:375px){html[data-rem="320"]{font-size:23.4375px!important}}@media only screen and (min-width:400px){html[data-rem="320"]{font-size:25px!important}}@media only screen and (min-width:414px){html[data-rem="320"]{font-size:25.875px!important}}@media only screen and (min-width:480px){html[data-rem="320"]{font-size:30px!important}}.search{width:100%;position:fixed;padding:.75rem 1rem;background:#fff}.search .color{float:left}.search .icon-color{background:url(assets/slice/color@2x.png);background-size:cover;width:1.3rem;height:1.25rem;display:block}.search .keyword{float:right;margin-top:.2rem;margin-bottom:0}.search .keyword-input{-webkit-appearance:none;box-shadow:none;outline:none;height:1.3rem;font-size:.7rem;border:.1rem solid #dadada;border-radius:.75rem;color:#000;padding-left:.75rem;width:0;position:absolute;top:50%;margin-top:-.65rem;right:2.4rem;background:#fff;display:none}.search .keyword-input.active{width:15.5rem;display:block}.search .icon-keyword{background:url(assets/slice/search@2x.png);background-size:cover;width:.9rem;height:.9rem;display:block}.color-list{background:#fff;overflow-x:scroll;overflow-y:hidden;white-space:nowrap;width:15rem;height:1.95rem;position:absolute;left:2.8rem;top:.45rem;display:none;vertical-align:middle}.color-list.active{display:block}.color-list li{width:1.25rem;height:1.25rem;background:rgba(255,0,0,.1);margin-left:.5rem;display:inline-block;border-radius:50%;box-shadow:-.2rem .2rem .6rem -.25rem #bdbdbd;vertical-align:middle;-webkit-transition:all .2s 0;transition:all .2s 0;margin-top:.15rem}.color-list li.color-list-active{-webkit-transform:scale(1.2);transform:scale(1.2)}.switchbox{position:relative;display:inline-block;top:-.1rem}.switchcontent{position:absolute;left:0;-webkit-transition:left .5s;transition:left .5s}.bluetooth{width:3.2rem;display:block;margin-left:-1.6rem;position:absolute;left:50%}.icon-bluetooth{background:url(assets/slice/bluetooth.png);background-size:cover;width:.825rem;height:1.175rem;display:inline-block}
+
+
+
+
+@media only screen and (max-width:320px){
+    .bluetooth{
+        width: 4.2rem
+    }
+    .switchbox{
+        top: 0;
+    }
+}
+
+
+

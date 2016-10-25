@@ -4,9 +4,22 @@ const Work = models.Work
 
 const work = {}
 
-work.list = (req, res, next) => {
 
-  
+work.all = (req, res, next) => {
+  Work.findAndCountAll().then((result) => {
+    const data = {
+      msg: '获取所有作品成功！',
+      success: true,
+      works: result.rows
+    }
+    res.json(data)
+  }).catch((err) => {
+    next(err)
+  }) 
+}
+
+
+work.list = (req, res, next) => {
   let countPerPage = 10, currentPage = req.query.page || 1;
   if(!(/^[0-9]*$/).test(currentPage)) {
     currentPage = 1
@@ -47,8 +60,8 @@ work.get = (req, res, next) => {
 }
 
 work.create = (req, res, next) => {
-  let {img, name, material, year, color, introduce, voice, AuthorId, size} = req.body
-  Work.create({img, name, material, year, color, introduce, voice, AuthorId, size}).then((work) => {
+  let {img, name, material, year, color, introduce, voice, AuthorId, size, uuid} = req.body
+  Work.create({img, name, material, year, color, introduce, voice, AuthorId, size, uuid}).then((work) => {
     const data = {
       msg: '新建作品成功！',
       success: true,
@@ -63,8 +76,8 @@ work.create = (req, res, next) => {
 work.update = (req, res) => {
 
   const { id } = req.params
-  const { img, name, material, year, color, introduce, voice, AuthorId, size } = req.body
-  Work.update({img, name, material, year, color, introduce, voice, AuthorId, size}, {where: {id}}).then(()=>{
+  const { img, name, material, year, color, introduce, voice, AuthorId, size , uuid} = req.body
+  Work.update({img, name, material, year, color, introduce, voice, AuthorId, size, uuid}, {where: {id}}).then(()=>{
     const data = {
       msg: '修改作品成功！',
       success: true

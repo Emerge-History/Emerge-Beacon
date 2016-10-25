@@ -24,7 +24,7 @@ app.use(fileUpload())
 // static
 app.use('/upload', express.static(path.join(__dirname, 'public/upload')))
 app.use('/admin', express.static(path.join(__dirname, 'public/admin')))
-
+app.use('/h5', express.static(path.join(__dirname, 'public/h5')))
 
 // beacon page
 import wechat from './controllers/wechat'

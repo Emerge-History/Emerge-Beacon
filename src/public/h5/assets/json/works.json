@@ -1,0 +1,99 @@
+{
+	"data": [{
+		"id": 1,
+		"img": "/assets/img/works/1.jpeg",
+		"name": "包法利夫人",
+		"material": "油画",
+		"year": "2013",
+		"size": "60*40cm",
+		"color": "248, 142, 3",
+		"introduce": "作品1",
+		"voice": "作品1",
+		"uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647821",
+		"AuthorId": 1
+	}, {
+		"id": 2,
+		"img": "/assets/img/works/2.jpeg",
+		"name": "茶花女",
+		"material": "国画",
+		"year": "2015",
+		"size": "60*40cm",
+		"color": "191, 191, 191",
+		"introduce": "作品1",
+		"voice": "作品1",
+		"uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647822",
+		"AuthorId": 2
+	}, {
+		"id": 3,
+		"img": "/assets/img/works/3.jpeg",
+		"name": "红与黑",
+		"material": "水彩画",
+		"year": "1683",
+		"size": "60*40cm",
+		"color": "255, 179, 179",
+		"introduce": "作品1",
+		"voice": "作品1",
+		"uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647823",
+		"AuthorId": 1
+	}, {
+		"id": 4,
+		"img": "/assets/img/works/4.jpeg",
+		"name": "欧也妮",
+		"material": "版画",
+		"year": "1554",
+		"size": "60*40cm",
+		"color": "255, 179, 170",
+		"introduce": "作品1",
+		"voice": "作品1",
+		"uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647824",
+		"AuthorId": 3
+	}, {
+		"id": 5,
+		"img": "/assets/img/works/5.jpeg",
+		"name": "葛朗台",
+		"material": "插画",
+		"year": "2013",
+		"size": "60*40cm",
+		"color": "25,30,35",
+		"introduce": "作品1",
+		"voice": "作品1",
+		"uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647825",
+		"AuthorId": 3
+	}, {
+		"id": 6,
+		"img": "/assets/img/works/6.jpeg",
+		"name": "悲惨世界",
+		"material": "漆画",
+		"year": "2013",
+		"size": "60*40cm",
+		"color": "0, 218, 229",
+		"introduce": "作品1",
+		"voice": "作品1",
+		"uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647826",
+		"AuthorId": 2
+	}, {
+		"id": 7,
+		"img": "/assets/img/works/7.jpeg",
+		"name": "双城记",
+		"material": "漆画",
+		"year": "2013",
+		"size": "60*40cm",
+		"color": "0, 218, 150",
+		"introduce": "作品1",
+		"voice": "作品1",
+		"uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647827",
+		"AuthorId": 1
+	}, {
+		"id": 8,
+		"img": "/assets/img/works/8.jpeg",
+		"name": "安娜·卡列尼娜",
+		"material": "插画",
+		"year": "1940",
+		"size": "60*40cm",
+		"color": "205, 230, 243",
+		"introduce": "作品1",
+		"voice": "作品1",
+		"uuid": "FDA50693-A4E2-4FB1-AFCF-C6EB07647828",
+		"AuthorId": 4
+	}]
+}

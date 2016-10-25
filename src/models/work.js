@@ -9,7 +9,8 @@ module.exports = function(sequelize, DataTypes) {
     size: DataTypes.STRING,
     color: DataTypes.STRING,
     introduce: DataTypes.STRING,
-    voice: DataTypes.STRING
+    voice: DataTypes.STRING,
+    uuid: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {

@@ -21,21 +21,28 @@ author.getSelectAllAuthors = (req, res, next) => {
 
 
 
-
+author.all = (req, res, next) => {
+  Author.findAndCountAll().then((result) => {
+    const data = {
+      msg: '获取所有作者成功！',
+      success: true,
+      authors: result.rows
+    }
+    res.json(data)
+  }).catch((err) => {
+    next(err)
+  }) 
+}
 
 
 
 
 author.list = (req, res, next) => {
-
-  
   let countPerPage = 10, currentPage = req.query.page || 1;
   if(!(/^[0-9]*$/).test(currentPage)) {
     currentPage = 1
   }
-  
   currentPage = Number(currentPage)
-
   Author.findAndCountAll({
     limit: countPerPage,                      
     offset: countPerPage * (currentPage - 1)
