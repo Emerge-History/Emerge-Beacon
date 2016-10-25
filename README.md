@@ -1,5 +1,5 @@
-# express-es6-boilerplate
-a quick start width using es6 in express
+# emerge-beacon
+a project with wechat beacon
 
 ## Usage
 
@@ -8,24 +8,19 @@ a quick start width using es6 in express
 npm start
 ```
 
-### use nodemon to start the server 
+### use admin
 ```
-npm run nstart
+username:admin password:admin
+GET localhost:3000/admin
 ```
 
-### use babel transform es6 => es5
+### get wechat config 
 ```js
-npm run build 
+GET localhost:3000/api/config
 ```
 
-### run test
+### get main page
 ```js
-npm run test
+GET localhost:3000/h5
 ```
 
-### run the build server
-```js
-npm run serve
-```
-
-### if you have any problem, please create an issue 
