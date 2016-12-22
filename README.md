@@ -19,8 +19,3 @@ GET localhost:3000/admin
 GET localhost:3000/api/config
 ```
 
-### get main page
-```js
-GET localhost:3000/h5
-```
-
